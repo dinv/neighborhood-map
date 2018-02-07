@@ -102,6 +102,11 @@
   background: none;
 }
 
+.form-control {
+  width: 85%;
+  margin: auto;
+}
+
 @media(max-width:768px) {
   #wrapper {
     padding-left: 250px;

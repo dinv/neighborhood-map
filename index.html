@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Target Finder</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,37 +27,28 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        Start Bootstrap
+                        Target Finder
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <button id="show-listings">Show All</button>
+                    <button id="hide-listings">Hide All</button>
                 </li>
-                <li>
-                    <a href="#">Shortcuts</a>
+                <br>
+                <li> 
+                    <input class="form-control" placeholder="Search…" type="search" name="filter" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">    
                 </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+                <br>
+    <li data-bind="template: {name:'beer', foreach:beers}">
+    </ul> 
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
+
         <div id="page-content-wrapper">
-            <div id='foo'>
+            <div>
                 <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 <div id="map-container">
                     <div id="map"></div>
@@ -92,8 +83,8 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 40.74135, lng: -73.99802},
-                zoom: 14,
+                center: {lat: 39.6006849, lng: -104.9491477},
+                zoom: 12,
                 mapTypeControl: false
                 });
 
@@ -102,12 +93,12 @@
         // These are the real estate listings that will be shown to the user.
         // Normally we'd have these in a database instead.
         var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+          {title: '6767 S Clinton St, Englewood, CO 80112', location: {lat: 39.584111, lng: -104.878002}},
+          {title: '1265 Sergeant Jon Stiles Dr, Highlands Ranch, CO 80129', location: {lat: 39.54986239999999, lng: -105.0049004}},
+          {title: '11150 S Twenty Mile Rd, Parker, CO 80134', location: {lat: 39.5132173, lng: -104.7730542}},
+          {title: '3650 River Point Pkwy, Sheridan, CO 80110', location: {lat: 39.6501413, lng: -105.0056014}},
+          {title: '7400 S Gartrell Rd, Aurora, CO 80016', location: {lat: 39.5812327, lng: -104.7220796}},
+           {title: '16910 E Quincy Ave, Aurora, CO 80015', location: {lat: 39.6362171, lng: -104.7903463}}
         ];
         var largeInfowindow = new google.maps.InfoWindow();
 
@@ -161,6 +152,28 @@
         return markerImage;
         }
 
+        document.getElementById('show-listings').addEventListener('click', showListings);
+        document.getElementById('hide-listings').addEventListener('click', function() {
+          hideMarkers(markers);
+        });
+
+      // This function will loop through the markers array and display them all.
+      function showListings() {
+        var bounds = new google.maps.LatLngBounds();
+        // Extend the boundaries of the map for each marker and display the marker
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+          bounds.extend(markers[i].position);
+        }
+        map.fitBounds(bounds);
+      }
+
+
+      function hideMarkers(markers) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+      }
       // This function populates the infowindow when the marker is clicked. We'll only allow
       // one infowindow which will open at the marker that is clicked, and populate based
       // on that markers position.
@@ -217,30 +230,6 @@
         map.fitBounds(bounds);
 
 
-            // // Create a single latLng literal object.
-            // var singleLatLng = {lat: 40.74135, lng: -73.99802};
-            // // TODO: Create a single marker appearing on initialize -
-            // // Create it with the position of the singleLatLng,
-            // // on the map, and give it your own title!
-
-            // var marker = new google.maps.Marker({
-            //     position: singleLatLng,
-            //     title: 'this is a test',
-            //     map: map,
-            //     animation: google.maps.Animation.DROP,
-            // });
-
-            // // TODO: create a single infowindow, with your own content.
-            // // It must appear on the marker
-            // var infowindow = new google.maps.InfoWindow({
-            // content: singleLatLng.lat + ", " + singleLatLng.lng
-            // });
-
-            // // TODO: create an EVENT LISTENER so that the infowindow opens when
-            // // the marker is clicked!
-            // marker.addListener('click', function(){
-            //     infowindow.open(map, marker)
-            // });
 
             $(window).resize(function () {
                 var h = $(window).height()
@@ -251,6 +240,17 @@
                 $('#page-content-wrapper').css('width', (w-s_w));
             }).resize();
 
+            var center;
+            function calculateCenter() {
+              center = map.getCenter();
+            }
+            google.maps.event.addDomListener(map, 'idle', function() {
+              calculateCenter();
+            });
+            google.maps.event.addDomListener(window, 'resize', function() {
+              map.setCenter(center);
+            });
+
         }
 
     </script>
@@ -258,6 +258,15 @@
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDgqc897iHjWBBXEeQpjZ0JXeZPVJQBZBE&callback=initMap">
     </script>
+    <script src="js/custom.js"></script>
+    <script src="js/beers.js"></script>
+
+    <script type="text/html" id="beer"> 
+        <a href="#">
+            <strong data-bind="text: title"></strong>
+        </a>
+    </script> 
+
 
 </body>
 
