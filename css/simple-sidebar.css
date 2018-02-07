@@ -50,6 +50,11 @@
   margin-right: -250px;
 }
 
+#pano {
+  width: 200px;
+  height: 200px;
+}
+
 /* Sidebar Styles */
 
 .sidebar-nav {
