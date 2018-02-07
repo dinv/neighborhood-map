@@ -197,7 +197,8 @@
               var nearStreetViewLocation = data.location.latLng;
               var heading = google.maps.geometry.spherical.computeHeading(
                 nearStreetViewLocation, marker.position);
-                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                // infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                infowindow.setContent('<div>' + marker.title + '</div>');
                 var panoramaOptions = {
                   position: nearStreetViewLocation,
                   pov: {
@@ -205,11 +206,12 @@
                     pitch: 30
                   }
                 };
-              var panorama = new google.maps.StreetViewPanorama(
-                document.getElementById('pano'), panoramaOptions);
+              // var panorama = new google.maps.StreetViewPanorama(
+              //   document.getElementById('pano'), panoramaOptions);
             } else {
-              infowindow.setContent('<div>' + marker.title + '</div>' +
-                '<div>No Street View Found</div>');
+              // infowindow.setContent('<div>' + marker.title + '</div>' +
+              //   '<div>No Street View Found</div>');
+              infowindow.setContent('<div>' + marker.title + '</div>');
             }
           }
           // Use streetview service to get the closest streetview image within
@@ -258,12 +260,12 @@
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDgqc897iHjWBBXEeQpjZ0JXeZPVJQBZBE&callback=initMap">
     </script>
-    <script src="js/custom.js"></script>
+    <script src="js/knockout.js"></script>
     <script src="js/beers.js"></script>
 
     <script type="text/html" id="beer"> 
         <a href="#">
-            <strong data-bind="text: title"></strong>
+            <span data-bind="text: title"></span>
         </a>
     </script> 
 
