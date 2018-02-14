@@ -37,7 +37,6 @@ function viewModel() {
             position: position,
             title: title,
             animation: google.maps.Animation.DROP,
-            icon: defaultIcon,
             id: i
           });
           // Push the marker to our array of markers.
@@ -48,12 +47,12 @@ function viewModel() {
           });
           // Two event listeners - one for mouseover, one for mouseout,
           // to change the colors back and forth.
-          marker.addListener('mouseover', function() {
-            this.setIcon(highlightedIcon);
-          });
-          marker.addListener('mouseout', function() {
-            this.setIcon(defaultIcon);
-          });
+          // marker.addListener('mouseover', function() {
+          //   this.setIcon(highlightedIcon);
+          // });
+          // marker.addListener('mouseout', function() {
+          //   this.setIcon(defaultIcon);
+          // });
         }
 
         // This function takes in a COLOR, and then creates a new marker
@@ -70,10 +69,10 @@ function viewModel() {
         return markerImage;
         }
 
-        document.getElementById('show-listings').addEventListener('click', showListings);
-        document.getElementById('hide-listings').addEventListener('click', function() {
-          hideMarkers(markers);
-        });
+        // document.getElementById('show-listings').addEventListener('click', showListings);
+        // document.getElementById('hide-listings').addEventListener('click', function() {
+        //   hideMarkers(markers);
+        // });
 
         // This function will loop through the markers array and display them all.
         function showListings() {
@@ -139,34 +138,10 @@ function viewModel() {
         $(window).resize(function () {
             var h = $(window).height()
                 w = $(window).width()
-                s_w = $('#sidebar-wrapper').width()
-                offsetTop = 80, // Calculate the top offset
+                offsetTop = 0, // Calculate the top offset
             $('#map').css('height', (h - offsetTop));
-            $('#page-content-wrapper').css('width', (w-s_w));
         }).resize();
 
-        var center;
-        function calculateCenter() {
-          center = map.getCenter();
-        }
-        google.maps.event.addDomListener(map, 'idle', function() {
-          calculateCenter();
-        });
-        google.maps.event.addDomListener(window, 'resize', function() {
-          map.setCenter(center);
-        });
-
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-            var h = $(window).height()
-                w = $(window).width()
-                s_w = $('#sidebar-wrapper').width()
-                offsetTop = 80, // Calculate the top offset
-            $('#map').css('height', (h - offsetTop));
-            $('#page-content-wrapper').css('width', (w-(250-s_w)));
-            google.maps.event.trigger(map, 'resize');
-        });
 
     };
     initMap();   
