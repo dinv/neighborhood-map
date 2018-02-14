@@ -148,7 +148,7 @@
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 16px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -163,8 +163,8 @@
 .sidenav .closebtn {
     position: absolute;
     top: 0;
-    right: 7px;
-    font-size: 36px;
+    right: 2px;
+    font-size: 30px;
     margin-left: 50px;
 }
 
@@ -183,6 +183,13 @@
 #main {
     transition: margin-left .5s;
     padding: 20px;
+}
+
+#hamburger {
+    width: 30px;
+    height: 3px;
+    background-color: #818181;
+    margin: 6px 0;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

@@ -14,11 +14,22 @@
     <body>
 
         <div id="mySidenav" class="sidenav">
-          <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
-          <a href="#" class="my-input">About</a>
-          <a href="#" class="my-input">Services</a>
-          <a href="#" class="my-input">Clients</a>
-          <a href="#" class="my-input">Contact</a>
+          <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">
+            <div id="hamburger"></div>
+            <div id="hamburger"></div>
+            <div id="hamburger"></div>
+          </a>
+
+                <li> 
+                    <input class="form-control my-input" placeholder="Search…" type="search" name="filter" data-bind="textInput: searchOption, valueUpdate: 'keyup'" autocomplete="off">    
+                </li>
+
+    <li data-bind="foreach:myLocationsFilter">
+        <a href="#">
+            <span class="my-input" data-bind="text: title"></span>
+        </a>
+
+
         </div>
 
         <div id='map'></div>
@@ -39,34 +50,14 @@
             src="js/app.js">
         </script>
 
+        <script
+            src="js/navbar.js">
+        </script>
+
         <script async defer
           src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDgqc897iHjWBBXEeQpjZ0JXeZPVJQBZBE&callback=startApp">
         </script>
 
-        <script>
-            /* Set the width of the side navigation to 250px */
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "250px";
-            }
-
-            /* Set the width of the side navigation to 0 */
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "50px";
-            }
-
-            function toggleNav() {
-                width = $("#mySidenav").width()
-                if (width == 50){
-                    openNav()
-                } else{
-                    closeNav()
-                }
-                items = document.getElementsByClassName('my-input');
-                for (var i = 0; i < items.length; i++){
-                    items[i].classList.toggle('show');
-                } 
-            }
-        </script>
 
     </body>
 
