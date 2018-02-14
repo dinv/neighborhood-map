@@ -138,8 +138,7 @@ function viewModel() {
         $(window).resize(function () {
             var h = $(window).height()
                 w = $(window).width()
-                offsetTop = 0, // Calculate the top offset
-            $('#map').css('height', (h - offsetTop));
+            $('#map').css('height', h);
         }).resize();
 
 
