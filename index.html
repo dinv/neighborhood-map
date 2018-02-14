@@ -20,16 +20,14 @@
             <div id="hamburger"></div>
           </a>
 
-                <li> 
-                    <input class="form-control my-input" placeholder="Search…" type="search" name="filter" data-bind="textInput: searchOption, valueUpdate: 'keyup'" autocomplete="off">    
-                </li>
+          <li> 
+            <input class="form-control my-input" placeholder="Search…" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" autocomplete="off">    
+          </li>
 
-    <li data-bind="foreach:myLocationsFilter">
-        <a href="#">
-            <span class="my-input" data-bind="text: title"></span>
-        </a>
-
-
+          <li data-bind="foreach:locationsFilter">
+            <a href="#">
+              <span class="my-input" data-bind="text: title, click: bounceAndOpenInfoWindow"></span>
+            </a>
         </div>
 
         <div id='map'></div>
