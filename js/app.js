@@ -18,6 +18,16 @@ function viewModel() {
       {address: '16910 E Quincy Ave', city: 'Aurora 80015', location: {lat: 39.6362171, lng: -104.7903463}}
     ];
 
+    this.recenter = function(){
+        var panListener = google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+                        map.panBy(-250,0);
+                    });
+       
+ setTimeout(function() {
+            google.maps.event.removeListener(panListener)
+        }, 2000);  
+    }
+
     this.bounceAndOpenInfoWindow=function() {
       populateInfoWindow(this, largeInfowindow);
       if (this.getAnimation() !== null) {
@@ -95,7 +105,6 @@ function viewModel() {
           bounds.extend(this.markers[i].position);
         }
         map.fitBounds(bounds);
-
 
         $(window).resize(function () {
             var h = $(window).height()
