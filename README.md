@@ -1,6 +1,4 @@
 # Udacity FSND Neighborhood Map Project
-This project is for Udacity's Fullstack Nanodegree program.
-
 ## Code
 CSS
 - `styles.css` (CSS for index.html)
