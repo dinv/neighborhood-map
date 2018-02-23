@@ -60,6 +60,16 @@
     width: 60%;
 }
 
+.googleError {
+    position: absolute;
+    padding: 8px 8px 8px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
 .form-control {
   width: 85%;
   margin: auto;

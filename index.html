@@ -24,10 +24,14 @@
             <input class="form-control my-input show" placeholder="Search for a Target" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" autocomplete="off">    
           </li> <br>
 
-          <li style="list-style-type:none;" data-bind="foreach:locationsFilter">
-            <a href="#">
-              <span class="my-input show" data-bind="text: title, click: bounceAndOpenInfoWindow"></span>
-            </a>
+          <div id="myGoogleError" class="googleError my-input show"></div>
+
+          <div id="listArea">
+              <li style="list-style-type:none;" data-bind="foreach:locationsFilter">
+                <a href="#">
+                  <span class="my-input show" data-bind="text: title, click: bounceAndOpenInfoWindow"></span>
+                </a>
+          </div>
 
           <div class="sidenav-footer my-input show">
             <img class="attribution" src="img/foursquare_attr.png"></img>
@@ -49,16 +53,17 @@
             src="js/knockout.js">
         </script>
 
-        <script 
-            src="js/app.js">
-        </script>
-
         <script
             src="js/navbar.js">
         </script>
 
+        <script 
+            src="js/app.js">
+        </script>
+
         <script async defer
-          src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDgqc897iHjWBBXEeQpjZ0JXeZPVJQBZBE&callback=startApp">
+          src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDgqc897iHjWBBXEeQpjZ0JXeZPVJQBZBE&callback=startApp"
+          onerror="googleError()">
         </script>
 
 

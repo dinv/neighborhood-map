@@ -139,6 +139,10 @@ function viewModel() {
 
 };
 
+googleError = function googleError() {
+    $('#myGoogleError').text("Uh oh!  The Google Maps API could not be loaded :(");
+};
+
 function startApp() {
    ko.applyBindings(viewModel); 
 }  
