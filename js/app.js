@@ -10,12 +10,12 @@ function viewModel() {
                 mapTypeControl: false
                 });
     this.locations = [
-      {address: '6767 S Clinton St', city: 'Englewood 80112', location: {lat: 39.584111, lng: -104.878002}},
-      {address: '1265 Sergeant Jon Stiles Dr', city: 'Highlands Ranch 80129', location: {lat: 39.54986239999999, lng: -105.0049004}},
-      {address: '11150 S Twenty Mile Rd', city: 'Parker 80134', location: {lat: 39.5132173, lng: -104.7730542}},
-      {address: '3650 River Point Pkwy', city: 'Sheridan 80110', location: {lat: 39.6501413, lng: -105.0056014}},
-      {address: '7400 S Gartrell Rd', city: 'Aurora 80016', location: {lat: 39.5812327, lng: -104.7220796}},
-      {address: '16910 E Quincy Ave', city: 'Aurora 80015', location: {lat: 39.6362171, lng: -104.7903463}}
+      {address: '6767 S Clinton St', location: {lat: 39.584111, lng: -104.878002}},
+      {address: '1265 Sergeant Jon Stiles Dr', location: {lat: 39.54986239999999, lng: -105.0049004}},
+      {address: '11150 S Twenty Mile Rd', location: {lat: 39.5132173, lng: -104.7730542}},
+      {address: '3650 River Point Pkwy', location: {lat: 39.6501413, lng: -105.0056014}},
+      {address: '7400 S Gartrell Rd', location: {lat: 39.5812327, lng: -104.7220796}},
+      {address: '16910 E Quincy Ave', location: {lat: 39.6362171, lng: -104.7903463}}
     ];
 
     this.recenter = function(){
@@ -51,30 +51,36 @@ function viewModel() {
           // Clear the infowindow content to give the streetview time to load.
           infowindow.setContent('');
           infowindow.marker = marker;
+
+          // Foursquare API Client
+          clientID = "20HQ13ZT0S11J2B1KHHHA0B3YXFVMYXY0SFIW2YQISJJE4GK";
+          clientSecret =
+              "0VRLQVEXMXDYT2XUHPN5WPC2EXHOOQ3VKNS2W55FSOCEYTFJ";
+
+          // URL for Foursquare API
+          var apiUrl = 'https://api.foursquare.com/v2/venues/search?ll=' +
+              marker.position.lat() + ',' + marker.position.lng() + '&client_id=' + clientID +
+              '&client_secret=' + clientSecret + '&query=target&v=20170708' + '&m=foursquare';
+
+          // Foursquare API
+          $.getJSON(apiUrl).done(function(marker) {
+              var response = marker.response.venues[0];
+              console.log(response);
+          }).fail(function() {
+              // Send alert
+              alert(
+                  "There was an issue loading the Foursquare API. Please refresh your page to try again."
+              );
+          });
+
+          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.open(map, marker);
+
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
           });
-          var streetViewService = new google.maps.StreetViewService();
-          var radius = 50;
-          // In case the status is OK, which means the pano was found, compute the
-          // position of the streetview image, then calculate the heading, then get a
-          // panorama from that and set the options
-          function getStreetView(data, status) {
-            if (status == google.maps.StreetViewStatus.OK) {
-              var nearStreetViewLocation = data.location.latLng;
-              var heading = google.maps.geometry.spherical.computeHeading(
-                nearStreetViewLocation, marker.position);
-                infowindow.setContent('<div>' + marker.title + '</div>');
-            } else {
-                infowindow.setContent('<div>' + marker.title + '</div>');
-            }
-          }
-          // Use streetview service to get the closest streetview image within
-          // 50 meters of the markers position
-          streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-          // Open the infowindow on the correct marker.
-          infowindow.open(map, marker);
+
         }
     }
 
