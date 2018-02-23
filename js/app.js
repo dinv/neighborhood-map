@@ -24,9 +24,9 @@ function viewModel() {
                     });
        
  setTimeout(function() {
-            google.maps.event.removeListener(panListener)
+            google.maps.event.removeListener(panListener);
         }, 2000);  
-    }
+    };
 
     this.bounceAndOpenInfoWindow=function() {
       populateInfoWindow(this, largeInfowindow);
@@ -40,7 +40,7 @@ function viewModel() {
       }
       var latLng = this.getPosition(); // returns LatLng object
       this.map.panTo(latLng); // setCenter takes a LatLng object
-    }
+    };
 
     // This function populates the infowindow when the marker is clicked. We'll only allow
     // one infowindow which will open at the marker that is clicked, and populate based
@@ -63,16 +63,16 @@ function viewModel() {
               '&client_secret=' + clientSecret + '&query=target&v=20170708' + '&m=foursquare';
 
           // Foursquare API
-          var HTMLContent = ''
+          var HTMLContent = '';
           $.getJSON(apiUrl).done(function(marker) {
               var response = marker.response.venues[0];
               for (var i = 0; i < response.location.formattedAddress.length; i++){
-                HTMLContent += response.location.formattedAddress[i]
-                HTMLContent += '<br>'
+                HTMLContent += response.location.formattedAddress[i];
+                HTMLContent += '<br>';
               }
               infowindow.setContent('<div>' + HTMLContent + '</div>');
           }).fail(function() {
-              infowindow.setContent('<div> Uh oh!  There was an error reaching the Foursquare API :(<div>')
+              infowindow.setContent('<div> Uh oh!  There was an error reaching the Foursquare API :(<div>');
 
           });
 
@@ -83,10 +83,10 @@ function viewModel() {
           });
 
         }
-    }
+    };
 
     this.initMap = function(){
-        var map = this.map
+        var map = this.map;
         // The following group uses the location array to create an array of markers on initialize.
         for (var i = 0; i < this.locations.length; i++) {
           // Get the position from the location array.
@@ -107,15 +107,15 @@ function viewModel() {
 
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
-        for (var i = 0; i < markers.length; i++) {
+        for (i = 0; i < markers.length; i++) {
           this.markers[i].setMap(map);
           bounds.extend(this.markers[i].position);
         }
         map.fitBounds(bounds);
 
         $(window).resize(function () {
-            var h = $(window).height()
-                w = $(window).width()
+            var h = $(window).height();
+                w = $(window).width();
             $('#map').css('height', h);
         }).resize();
     };
@@ -137,7 +137,7 @@ function viewModel() {
         return result;
     }, this);
 
-};
+}
 
 googleError = function googleError() {
     $('#myGoogleError').text("Uh oh!  The Google Maps API could not be loaded :(");
