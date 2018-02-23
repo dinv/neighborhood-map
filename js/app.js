@@ -63,19 +63,20 @@ function viewModel() {
               '&client_secret=' + clientSecret + '&query=target&v=20170708' + '&m=foursquare';
 
           // Foursquare API
+          var HTMLContent = ''
           $.getJSON(apiUrl).done(function(marker) {
               var response = marker.response.venues[0];
-              console.log(response);
+              for (var i = 0; i < response.location.formattedAddress.length; i++){
+                HTMLContent += response.location.formattedAddress[i]
+                HTMLContent += '<br>'
+              }
+              infowindow.setContent('<div>' + HTMLContent + '</div>');
           }).fail(function() {
-              // Send alert
-              alert(
-                  "There was an issue loading the Foursquare API. Please refresh your page to try again."
-              );
+              infowindow.setContent('<div> Uh oh!  There was an error reaching the Foursquare API :(<div>')
+
           });
 
-          infowindow.setContent('<div>' + marker.title + '</div>');
           infowindow.open(map, marker);
-
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;

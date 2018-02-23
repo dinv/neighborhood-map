@@ -21,13 +21,18 @@
           </a>
 
           <li style="list-style-type:none;" > 
-            <input class="form-control my-input show" placeholder="Search…" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" autocomplete="off">    
+            <input class="form-control my-input show" placeholder="Search for a Target" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" autocomplete="off">    
           </li> <br>
 
           <li style="list-style-type:none;" data-bind="foreach:locationsFilter">
             <a href="#">
               <span class="my-input show" data-bind="text: title, click: bounceAndOpenInfoWindow"></span>
             </a>
+
+          <div class="foot my-input show">
+            Footer area
+          </div>
+
         </div>
 
         <div id='map'></div>
